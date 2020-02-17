@@ -1,0 +1,26 @@
+id: "cloudnative"
+name: "The Containers and Cloud-Native Roadshow Dev Track - Module 3"
+
+content:
+  url: https://raw.githubusercontent.com/RedHat-Middleware-Workshops/cloud-native-workshop-v2m3-guides.git/master
+
+vars:
+  ROUTE_SUBDOMAIN:
+  MASTER_URL:
+  CONSOLE_URL:
+  ECLIPSE_CHE_URL:
+  KEYCLOAK_URL:
+  GIT_URL:
+  CHE_USER_NAME:
+  CHE_USER_PASSWORD:
+  OPENSHIFT_USER_NAME:
+  OPENSHIFT_USER_PASSWORD:
+  RHAMT_URL:
+
+modules:
+  activate:
+  - workshop-environment
+  - getting-started-service-mesh
+  - creating-distributed-services
+  - service-visualizing-monitoring
+  - advanced-service-mesh-dev
