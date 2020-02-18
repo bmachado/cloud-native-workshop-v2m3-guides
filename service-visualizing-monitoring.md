@@ -10,7 +10,7 @@ To get a better idea of the power of metrics, let's setup an endless loop that w
 
 Open a new _Terminal_ and execute this command with your own _Bookinfo App URL_:
 
-`BOOK_URL=REPLACE WITH YOUR BOOKINFO APP URL`
+`BOOK_URL={{OPENSHIFT_USER_NAME}}-bookinfo-istio-system.{{ROUTE_SUBDOMAIN}}`
 
 `for i in {1..1000} ; do curl -o /dev/null -s -w "%{http_code}\n" http://$BOOK_URL/productpage ; sleep 2 ; done`
 
@@ -259,7 +259,7 @@ Now, access the application again in your web browser using the below link and r
 
 > **NOTE** - It may take a minute or two for the new routing to take effect. If you still see red or black stars, wait a minute and try again. Eventually it should no longer show any red/black stars.
 
-* Bookinfo Application with no rating stars at `http://$BOOK_URL/productpage`
+* Bookinfo Application with no rating stars at `http://{{OPENSHIFT_USER_NAME}}-bookinfo-istio-system.{{ROUTE_SUBDOMAIN}}/productpage`
 
 To verify this, open the Grafana Dashboard (find this URL via _Networking > Routes_)
 
@@ -304,7 +304,7 @@ This says that for any incoming HTTP request that has a cookie set to the _jason
 
 Now, access the application again via your own _Gateway URL_:
 
-`http://YOUR_BOOK_APP_URL/productpage` and click **Sign In** (at the upper right) and sign in with:
+`http://{{OPENSHIFT_USER_NAME}}-bookinfo-istio-system.{{ROUTE_SUBDOMAIN}}/productpage` and click **Sign In** (at the upper right) and sign in with:
 
 * Username: **jason**
 * Password: **jason**

@@ -2,11 +2,7 @@
 
 In this lab, you will use advanced service mesh features such as **Fault Injection**, **Traffic Shifting**, **Circuit Breaking**, and **Rate Limiting** with a different application - the Coolstore microservice developed in prior labs (i.e Catalog, Inventory) that you developed and deployed to OpenShift cluster in _Module 1_ or/and _Module 2_.
 
-##### If this is the first module you are doing today
-
-If you have already deployed the _inventory_ and _catalog_ microservices from Module 1, you can skip this step!
-
-If you haven't done Module 1 or Module 2 today, **or you didn't quite complete them**, you should deploy the coolstore application and microservices by executing the following shell scripts in CodeReady Workspaces Terminal:
+You have to deploy the coolstore application and microservices by executing the following shell scripts in CodeReady Workspaces Terminal:
 
 `sh /projects/cloud-native-workshop-v2m3-labs/istio/scripts/deploy-inventory.sh {{OPENSHIFT_USER_NAME}}`
 
@@ -99,7 +95,7 @@ You will see **istio-proxy** container and _catalog-springboot_ container in the
 
 Let's make sure if inventory and catalog services are working correctly via accessing _Catalog Route URL_ in your browser. You can also find the URL via _Networking > Routes_ in OpenShift web console, after selecting the `{{OPENSHIFT_USER_NAME}}-catalog` from the _namespace_ dropdown menu. Open the URL in your browser:
 
-* Catalog UI (replace `{{OPENSHIFT_USER_NAME}}` with your username): http://catalog-springboot-{{OPENSHIFT_USER_NAME}}-catalog.{{ROUTE_SUBDOMAIN}}
+* Catalog UI: http://catalog-springboot-{{OPENSHIFT_USER_NAME}}-catalog.{{ROUTE_SUBDOMAIN}}
 
 You will see the following web page including **Inventory Quantity** if the catalog service can access the inventory service via _Istio proxy sidecar_:
 
@@ -226,6 +222,8 @@ Open **inventory-vs-fault.yaml** file in `/projects/cloud-native-workshop-v2m3-l
 
 > You need to replace all `YOUR_INVENTORY_GATEWAY_URL` with the previous route URL that you copied earlier.
 
+`inventory-quarkus-{{OPENSHIFT_USER_NAME}}-inventory.{{ROUTE_SUBDOMAIN}}`
+
 ~~~yaml
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
@@ -272,6 +270,8 @@ Let's now add a 5 second delay for the `inventory` service.
 Open **inventory-vs-fault-delay.yaml** file in `/projects/cloud-native-workshop-v2m3-labs/inventory/rules/` and copy the following code into it:
 
 > Again, you need to replace all **YOUR_INVENTORY_GATEWAY_URL** with the previous route URL that you copied earlier.
+
+`inventory-quarkus-{{OPENSHIFT_USER_NAME}}-inventory.{{ROUTE_SUBDOMAIN}}`
 
 ~~~yaml
 apiVersion: networking.istio.io/v1alpha3
@@ -403,7 +403,7 @@ Execute this to simulate a number of users attampting to access the gateway URL 
 ~~~
 
 Due to the very conservative circuit breaker, many of these calls will fail with HTTP 503 (Server Unavailable). To see this,
-open the _Istio Service Dashboard_ in the [Grafana console](https://grafana-istio-system.{{ROUTE_SUBDOMAIN}}/) and select `inventory-quarkus.{{OPENSHIFT_USER_NAME}}-inventory.svc.cluster.local` service:
+open the _Istio Service Dashboard_ in the [Grafana console](http://grafana-istio-system.{{ROUTE_SUBDOMAIN}}/) and select `inventory-quarkus.{{OPENSHIFT_USER_NAME}}-inventory.svc.cluster.local` service:
 
 > `NOTE`: It may take 10-20 seconds before the evidence of the circuit breaker is visible within the Grafana dashboard, due to the not-quite-realtime nature of Prometheus metrics and Grafana refresh periods and general network latency.
 
@@ -517,8 +517,6 @@ _Red Hat Single Sign-On (RH-SSO)_ is based on the **Keycloak** project and enabl
 
 We will deploy RH-SSO in Catalog project. Run the following commands in CodeReady Workspaces Terminal:
 
-> Note: You need to replace `{{OPENSHIFT_USER_NAME}}` with your username and replace `auth{{OPENSHIFT_USER_NAME}}`.
-
 ~~~shell
 oc -n {{OPENSHIFT_USER_NAME}}-catalog new-app ccn-sso72 \
    -p SSO_ADMIN_USERNAME=admin \
@@ -625,7 +623,7 @@ In CodeReady, open the blank **ccn-auth-config.yml** file in `/projects/cloud-na
 
 You can also get the route url via executing the following commands in CodeReady Workspaces Terminal:
 
-`oc get route -n {{OPENSHIFT_USER_NAME}}-catalog secure-sso --template '{{.spec.host}}{{"\n"}}'`
+`oc get route -n {{OPENSHIFT_USER_NAME}}-catalog secure-sso`
 
 Use this value to replace `YOUR_SSO_HTTP_ROUTE_URL`. You will also use this later!
 
@@ -658,6 +656,8 @@ Then execute the following oc command in CodeReady Workspaces Terminal to create
 Now you can't access the catalog service without authentication of RH-SSO. You confirm it using a curl command in CodeReady Workspaces Terminal:
 
 `curl -i http://YOUR_CATALOG_GATEWAY_URL/services/products ; echo`
+
+`http://catalog-springboot-{{OPENSHIFT_USER_NAME}}-catalog.{{ROUTE_SUBDOMAIN}}/services/products`
 
 You should get and `HTTP 401 Unauthorized` and `Origin authentication failed.` messages.
 

@@ -106,7 +106,7 @@ And then create the _ingress gateway_ for Bookinfo:
 
 For your conveience, set an environment variable in the CodeReady Workspaces Terminal:
 
-`echo "export BOOK_URL=REPLACE WITH YOUR BOOKINFO APP URL" >> ~/.bashrc && source ~/.bashrc` (again, replace the same value as above).
+`echo "export BOOK_URL={{OPENSHIFT_USER_NAME}}-bookinfo-istio-system.{{ROUTE_SUBDOMAIN}}" >> ~/.bashrc && source ~/.bashrc`
 
 When the app is installed, each Pod will get an additional _sidecar_ container as described earlier.
 

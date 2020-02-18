@@ -116,8 +116,6 @@ We will use these in future steps in this scenario!
 
 ---
 
-##### If this is the first module you are doing today
-
 You will be using Red Hat CodeReady Workspaces, an online IDE based on [Eclipe Che](https://www.eclipse.org/che/){:target="_blank"}{:target="_blank"}. **Changes to files are auto-saved every few seconds**, so you don't need to explicitly save changes.
 
 To get started, [access the Che instance]({{ ECLIPSE_CHE_URL }}){:target="_blank"} and log in using the username and password you've been assigned (e.g. `{{ CHE_USER_NAME }}/{{ CHE_USER_PASSWORD }}`):
