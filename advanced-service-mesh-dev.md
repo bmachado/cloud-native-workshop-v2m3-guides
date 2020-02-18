@@ -623,7 +623,7 @@ In CodeReady, open the blank **ccn-auth-config.yml** file in `/projects/cloud-na
 
 You can also get the route url via executing the following commands in CodeReady Workspaces Terminal:
 
-`oc get route -n {{OPENSHIFT_USER_NAME}}-catalog secure-sso`
+`oc get route -n {{OPENSHIFT_USER_NAME}}-catalog sso`
 
 Use this value to replace `YOUR_SSO_HTTP_ROUTE_URL`. You will also use this later!
 
